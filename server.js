@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 // import express routers
 const userRoutes = require('./routes/api/user');
@@ -8,12 +9,17 @@ const postRoutes = require('./routes/api/post');
 
 const app = express();
 
+// body-parser middleware setup
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 // DB config
 const db = require('./config/keys').mongoURI;
 
 // Connect to mongoDB
 mongoose.connect(
   db,
+  { useNewUrlParser: true },
   err => {
     err ? console.log(err) : console.log('Mlab connected');
   }
