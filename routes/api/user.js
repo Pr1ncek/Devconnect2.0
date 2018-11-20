@@ -3,6 +3,10 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const secret = require('../../config/keys').jwtSecret;
+const passport = require('passport');
+
+// Load input validation
+const validateSignupInput = require('../../validation/register');
 
 // Load user model
 const User = require('../../models/User');
@@ -11,11 +15,15 @@ const User = require('../../models/User');
 // @desc    Register a new user
 // @access  Public
 router.post('/register', (req, res) => {
+  // check if all inputs are valid
+  const { isValid, errors } = validateSignupInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
+
   User.findOne({ email: req.body.email }, (err, foundUser) => {
     if (err) return res.status(400).json({ Error: err });
 
     if (foundUser)
-      return res.status(400).json({ Email: 'Email already exists' });
+      return res.status(400).json({ ...errors, email: 'Email already exists' });
 
     const { name, email, password, avatarURL } = req.body;
     //console.log(name, email, password, avatarURL);
@@ -57,5 +65,16 @@ router.post('/login', (req, res) => {
     });
   });
 });
+
+// @route   GET api/user/current
+// @desc    Get info about current user
+// @access  Private
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 module.exports = router;
