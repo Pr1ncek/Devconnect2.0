@@ -7,6 +7,7 @@ const passport = require('passport');
 
 // Load input validation
 const validateSignupInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 
 // Load user model
 const User = require('../../models/User');
@@ -25,8 +26,9 @@ router.post('/register', (req, res) => {
     if (foundUser)
       return res.status(400).json({ ...errors, email: 'Email already exists' });
 
-    const { name, email, password, avatarURL } = req.body;
-    //console.log(name, email, password, avatarURL);
+    let { name, email, password, avatarURL } = req.body;
+    name = name.trim();
+    passport = password.trim();
     bcrypt.hash(password, 10, (err, hash) => {
       User.create(
         { name, email, password: hash, avatarURL },
@@ -43,15 +45,19 @@ router.post('/register', (req, res) => {
 // @desc    Login user and return JWT
 // @access  Public
 router.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  // check if all inputs are valid
+  const { isValid, errors } = validateLoginInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
+  const { email, password } = req.body;
   User.findOne({ email }, (err, foundUser) => {
     if (err) return res.status(400).json({ Error: err });
-    if (!foundUser) return res.status(400).json({ Email: 'Email not found' });
+    if (!foundUser)
+      return res.status(400).json({ ...errors, email: 'Email not found' });
 
     bcrypt.compare(password, foundUser.password, (err, isMatch) => {
       if (!isMatch) {
-        res.send({ Password: 'Incorrect password' });
+        res.send({ ...errors, password: 'Incorrect password' });
       } else {
         jwt.sign(
           { email: foundUser.email, id: foundUser.id },

@@ -47,9 +47,4 @@ const validateSignupInput = data => {
     isValid: isEmpty(errors)
   };
 };
-
-const x = e => {
-  return validator.isEmail(e);
-};
-console.log(x('prince'));
 module.exports = validateSignupInput;
