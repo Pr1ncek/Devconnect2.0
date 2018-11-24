@@ -7,6 +7,8 @@ const passport = require('passport');
 const userRoutes = require('./routes/api/user');
 const profileRoutes = require('./routes/api/profile');
 const postRoutes = require('./routes/api/post');
+const experienceRoutes = require('./routes/api/experience');
+const educationRoutes = require('./routes/api/education');
 
 const app = express();
 
@@ -32,6 +34,8 @@ require('./config/passport')(passport);
 
 // Use routes
 app.use('/api/user', userRoutes);
+app.use('/api/profile/experience', experienceRoutes);
+app.use('/api/profile/education', educationRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/post', postRoutes);
 

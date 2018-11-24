@@ -133,4 +133,18 @@ router.post(
   }
 );
 
+// @route   DELETE api/profile
+// @desc    Delete profile
+// @access  Private
+router.delete(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id }, err => {
+      if (err) return res.json(400).json(err);
+      res.status(200).json({ Msg: 'Profile deleted' });
+    });
+  }
+);
+
 module.exports = router;
