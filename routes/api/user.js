@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
 
     let { name, email, password, avatarURL } = req.body;
     name = name.trim();
-    passport = password.trim();
+    password = password.trim();
     bcrypt.hash(password, 10, (err, hash) => {
       User.create(
         { name, email, password: hash, avatarURL },
