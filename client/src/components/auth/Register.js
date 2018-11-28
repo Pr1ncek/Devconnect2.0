@@ -24,10 +24,12 @@ class Register extends Component {
     axios
       .post('/api/user/register', { name, email, password, confirmPassword })
       .then(res => console.log(res.data))
-      .catch(err => console.log(err.response.data));
+      .catch(err => this.setState({ errors: err.response.data }));
   };
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="register">
         <div className="container">
@@ -37,46 +39,72 @@ class Register extends Component {
               <p className="lead text-center">
                 Create your DevConnector account
               </p>
-              <form onSubmit={this.onSubmit}>
+              <form noValidate onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
                     type="text"
-                    className="form-control form-control-lg"
+                    className={
+                      'form-control form-control-lg' +
+                      (errors.name ? ' is-invalid' : '')
+                    }
                     placeholder="Name"
                     name="name"
                     value={this.state.name}
                     onChange={this.onChange}
                   />
+                  {errors.name && (
+                    <div className="invalid-feedback">{errors.name}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
                     type="email"
-                    className="form-control form-control-lg"
+                    className={
+                      'form-control form-control-lg' +
+                      (errors.email ? ' is-invalid' : '')
+                    }
                     placeholder="Email Address"
                     name="email"
                     value={this.state.email}
                     onChange={this.onChange}
                   />
+                  {errors.email && (
+                    <div className="invalid-feedback">{errors.email}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
                     type="password"
-                    className="form-control form-control-lg"
+                    className={
+                      'form-control form-control-lg' +
+                      (errors.password ? ' is-invalid' : '')
+                    }
                     placeholder="Password"
                     name="password"
                     value={this.state.password}
                     onChange={this.onChange}
                   />
+                  {errors.password && (
+                    <div className="invalid-feedback">{errors.password}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
                     type="password"
-                    className="form-control form-control-lg"
+                    className={
+                      'form-control form-control-lg' +
+                      (errors.confirmPassword ? ' is-invalid' : '')
+                    }
                     placeholder="Confirm Password"
                     name="confirmPassword"
                     value={this.state.confirmPassword}
                     onChange={this.onChange}
                   />
+                  {errors.confirmPassword && (
+                    <div className="invalid-feedback">
+                      {errors.confirmPassword}
+                    </div>
+                  )}
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
