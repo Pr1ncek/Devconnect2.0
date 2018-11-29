@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { loginUser } from '../../actions/auth-actions';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
   constructor(props) {
@@ -10,6 +14,10 @@ class Login extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) this.setState({ errors: nextProps.errors });
+  }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -17,7 +25,7 @@ class Login extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
-    console.log(email, password);
+    this.props.loginUser({ email, password }, this.props.history);
   };
   render() {
     return (
@@ -40,6 +48,7 @@ class Login extends Component {
                     onChange={this.onChange}
                   />
                 </div>
+                r
                 <div className="form-group">
                   <input
                     type="password"
@@ -59,4 +68,17 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(withRouter(Login));
