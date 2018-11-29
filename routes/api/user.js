@@ -57,14 +57,21 @@ router.post('/login', (req, res) => {
 
     bcrypt.compare(password, foundUser.password, (err, isMatch) => {
       if (!isMatch) {
-        res.send({ ...errors, password: 'Incorrect password' });
+        res.status(400).json({ ...errors, password: 'Incorrect password' });
       } else {
         jwt.sign(
-          { email: foundUser.email, id: foundUser.id },
+          {
+            email: foundUser.email,
+            id: foundUser.id,
+            name: foundUser.name,
+            avatarURL: foundUser.avatarURL
+          },
           secret,
           { expiresIn: '24h' },
           (err, token) => {
-            res.send({ Login: 'Success', Token: `Bearer ${token}` });
+            res
+              .status(200)
+              .json({ Login: 'Success', token: `Bearer ${token}` });
           }
         );
       }
