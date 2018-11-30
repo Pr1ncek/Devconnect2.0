@@ -71,7 +71,7 @@ router.get(
         if (!profile)
           return res
             .status(404)
-            .json({ ...errors, profile: 'There is no profile for this user' });
+            .json({ errors, profile: 'There is no profile for this user' });
         res.json(profile);
       });
   }
