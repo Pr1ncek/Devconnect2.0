@@ -1,11 +1,25 @@
+html,
+body {
+  height: 100%;
+}
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.App .container {
+  flex: 1 0 auto;
+}
+
 img {
   width: 100%;
 }
 
-.App {
-  min-height: 100%;
-  height: 100vh;
-  font-size: 18px;
+.login {
+  height: 75vh;
+}
+.register {
+  height: 75vh;
 }
 
 .landing {
@@ -42,13 +56,4 @@ img {
 
 .form-control::placeholder {
   color: #bbb !important;
-}
-
-footer {
-  position: relative;
-  left: 0;
-  bottom: 0;
-  height: 60px;
-  width: 100%;
-  overflow: hidden;
 }

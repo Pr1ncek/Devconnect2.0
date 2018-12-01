@@ -58,7 +58,8 @@ const profileSchema = new mongoose.Schema({
   ],
   social: {
     linkedin: { type: String },
-    github: { type: String },
+    twitter: { type: String },
+    facebook: { type: String },
     youtube: { type: String },
     twitter: { type: String },
     instagram: { type: String }

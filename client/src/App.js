@@ -14,6 +14,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import DashBoard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/common/PrivateRoute';
+import CreateProfile from './components/create-profile/CreateProfile';
 import { logoutUser } from './actions/auth-actions';
 
 // check for token
@@ -45,6 +46,11 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/dashboard" component={DashBoard} />
+                <PrivateRoute
+                  exact
+                  path="/create-profile"
+                  component={CreateProfile}
+                />
               </div>
             </div>
             <Footer />
