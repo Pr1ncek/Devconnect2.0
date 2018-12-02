@@ -61,7 +61,6 @@ const profileSchema = new mongoose.Schema({
     twitter: { type: String },
     facebook: { type: String },
     youtube: { type: String },
-    twitter: { type: String },
     instagram: { type: String }
   },
   date: {

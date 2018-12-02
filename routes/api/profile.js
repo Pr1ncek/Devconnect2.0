@@ -60,10 +60,9 @@ router.get('/id/:id', (req, res) => {
 // @desc    Get current user profile
 // @access  Private
 router.get(
-  '/current',
+  '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const errors = {};
     Profile.findOne({ user: req.user.id })
       .populate('user', ['name', 'avatarURL'])
       .exec((err, profile) => {
@@ -71,8 +70,8 @@ router.get(
         if (!profile)
           return res
             .status(404)
-            .json({ errors, profile: 'There is no profile for this user' });
-        res.json(profile);
+            .json({ profile: 'There is no profile for this user' });
+        res.status(200).json(profile);
       });
   }
 );
@@ -93,7 +92,7 @@ router.post(
       youtube,
       twitter,
       linkedin,
-      github,
+      facebook,
       instagram,
       handle
     } = req.body;
@@ -101,7 +100,7 @@ router.post(
       ...req.body,
       user: req.user.id,
       skills: skills.split(','),
-      social: { youtube, twitter, linkedin, instagram, github }
+      social: { youtube, twitter, linkedin, instagram, facebook }
     };
     Profile.findOne({ user: req.user.id }, (err, profile) => {
       if (err) return res.json(err);
