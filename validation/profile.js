@@ -6,7 +6,15 @@ const validateProfileInput = data => {
 
   let { handle, status, skills } = data;
 
-  let siteUrls = ['website', 'youtube', 'twitter', 'linkedin', 'instagram', 'facebook'];
+  let siteUrls = [
+    'website',
+    'youtube',
+    'twitter',
+    'linkedin',
+    'instagram',
+    'facebook',
+    'avatarURL'
+  ];
 
   handle = isEmpty(handle) ? '' : handle;
   status = isEmpty(status) ? '' : status;

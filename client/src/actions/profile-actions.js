@@ -22,3 +22,13 @@ export const createProfile = (profileData, history) => dispatch => {
       })
     );
 };
+
+// Delete Profile
+export const deleteProfile = () => dispatch => {
+  if (window.confirm('Are you sure you want to delete your profile?')) {
+    axios
+      .delete('/api/profile')
+      .then(res => dispatch({ type: GET_PROFILE, payload: {} }))
+      .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+  }
+};

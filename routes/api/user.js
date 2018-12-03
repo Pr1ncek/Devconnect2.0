@@ -63,8 +63,7 @@ router.post('/login', (req, res) => {
           {
             email: foundUser.email,
             id: foundUser.id,
-            name: foundUser.name,
-            avatarURL: foundUser.avatarURL
+            name: foundUser.name
           },
           secret,
           { expiresIn: '24h' },

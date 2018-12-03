@@ -5,9 +5,12 @@ import PropTypes from 'prop-types';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import TextFieldGroup from '../common/TextFieldGroup';
 import InputGroup from '../common/InputGroup';
-import { createProfile } from '../../actions/profile-actions';
+import {
+  createProfile,
+  getCurrentProfile
+} from '../../actions/profile-actions';
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +31,10 @@ class CreateProfile extends Component {
       instagram: '',
       errors: {}
     };
+  }
+
+  componentDidMount() {
+    this.props.getCurrentProfile();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -104,14 +111,11 @@ class CreateProfile extends Component {
     }
 
     return (
-      <div className="create-profile mb-5">
+      <div className="edit-profile mb-5">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Create Your Profile</h1>
-              <p className="lead text-center">
-                Let's get some information to make your profile stand out!
-              </p>
+              <h1 className="display-4 text-center">Edit Your Profile</h1>
               <small className="d-block pb-3">* = Required Fields</small>
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
@@ -212,10 +216,11 @@ class CreateProfile extends Component {
   }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  createProfile: PropTypes.func.isRequired
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -225,5 +230,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
-)(withRouter(CreateProfile));
+  { createProfile, getCurrentProfile }
+)(withRouter(EditProfile));

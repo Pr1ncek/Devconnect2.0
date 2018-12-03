@@ -10,6 +10,10 @@ const profileSchema = new mongoose.Schema({
     required: true,
     maxlength: 40
   },
+  avatarURL: {
+    type: String,
+    default: 'https://cdn.hipwallpaper.com/i/99/37/fwSGrR.jpg'
+  },
   company: {
     type: String
   },

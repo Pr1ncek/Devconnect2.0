@@ -31,12 +31,19 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <img
-            src={user.avatarURL}
-            alt=""
-            style={{ width: '40px', height: '40px', borderRadius: '50%' }}
-          />
-          <p style={{ display: 'inline' }} className="pr-5 pl-3 text-white">
+          {this.props.profile.profile &&
+          Object.keys(this.props.profile.profile).length > 0 ? (
+            <img
+              src={this.props.profile.profile.avatarURL}
+              alt=""
+              style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+            />
+          ) : null}
+
+          <p
+            style={{ display: 'inline' }}
+            className="pr-5 pl-3 text-white font-weight-bold"
+          >
             {user.name}
           </p>
           <button className="btn btn-danger" onClick={this.onLogoutClick}>
@@ -85,11 +92,13 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
 export default connect(

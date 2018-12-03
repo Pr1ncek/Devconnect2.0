@@ -3,11 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  password: { type: String, required: true },
-  avatarURL: {
-    type: String,
-    default: 'https://cdn.hipwallpaper.com/i/99/37/fwSGrR.jpg'
-  }
+  password: { type: String, required: true }
 });
 
 module.exports = mongoose.model('User', userSchema);
