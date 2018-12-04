@@ -9,6 +9,7 @@ import {
   createProfile,
   getCurrentProfile
 } from '../../actions/profile-actions';
+import { clearErrors } from '../../actions/error-actions';
 
 class EditProfile extends Component {
   constructor(props) {
@@ -37,10 +38,27 @@ class EditProfile extends Component {
     this.props.getCurrentProfile();
   }
 
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
+    if (nextProps.errors && Object.keys(nextProps.errors).length === 0)
+      if (nextProps.profile.profile) {
+        const profile = nextProps.profile.profile;
+        const { skills, social } = profile;
+        this.setState(prevState => ({
+          ...prevState,
+          ...profile,
+          ...social,
+          skills: skills.join(',')
+        }));
+        console.log(this.state);
+      }
   }
 
   onSubmit = e => {
@@ -124,6 +142,7 @@ class EditProfile extends Component {
                   value={this.state.handle}
                   onChange={this.onChange}
                   error={errors.handle}
+                  disabled={true}
                   info="A unique handle for your profile URL. Your full name, company name, nickname"
                 />
                 <TextFieldGroup
@@ -177,7 +196,7 @@ class EditProfile extends Component {
                 />
                 <TextFieldGroup
                   placeholder="Github Username"
-                  name="github"
+                  name="githubUsername"
                   value={this.state.githubUsername}
                   onChange={this.onChange}
                   error={errors.githubUsername}
@@ -230,5 +249,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile, getCurrentProfile }
+  { createProfile, getCurrentProfile, clearErrors }
 )(withRouter(EditProfile));

@@ -10,7 +10,7 @@ export const getCurrentProfile = () => dispatch => {
     .catch(err => dispatch({ type: GET_PROFILE, payload: {} }));
 };
 
-// Create a new profile
+// Create a new profile or update existing one
 export const createProfile = (profileData, history) => dispatch => {
   axios
     .post('/api/profile', profileData)
