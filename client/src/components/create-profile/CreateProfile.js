@@ -120,7 +120,7 @@ class CreateProfile extends Component {
                   value={this.state.handle}
                   onChange={this.onChange}
                   error={errors.handle}
-                  info="A unique handle for your profile URL. Your full name, company name, nickname"
+                  info="A unique handle for your profile URL. Your full name, company name, nickname. This can not be changed"
                 />
                 <TextFieldGroup
                   placeholder="Profile Image URL"

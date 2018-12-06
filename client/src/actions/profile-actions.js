@@ -32,3 +32,19 @@ export const deleteProfile = () => dispatch => {
       .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
   }
 };
+
+// Add work experience to the profile
+export const addExperience = (expData, history) => dispatch => {
+  axios
+    .post('/api/profile/experience', expData)
+    .then(response => history.push('/dashboard'))
+    .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+};
+
+// Add education to the profile
+export const addEducation = (eduData, history) => dispatch => {
+  axios
+    .post('api/profile/education', eduData)
+    .then(response => history.push('/dashboard'))
+    .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+};

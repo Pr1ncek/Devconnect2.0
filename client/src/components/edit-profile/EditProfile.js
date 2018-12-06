@@ -16,7 +16,6 @@ class EditProfile extends Component {
     super(props);
     this.state = {
       displaySocialInputs: false,
-      handle: '',
       company: '',
       website: '',
       location: '',
@@ -136,15 +135,6 @@ class EditProfile extends Component {
               <h1 className="display-4 text-center">Edit Your Profile</h1>
               <small className="d-block pb-3">* = Required Fields</small>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="* Profile Handle"
-                  name="handle"
-                  value={this.state.handle}
-                  onChange={this.onChange}
-                  error={errors.handle}
-                  disabled={true}
-                  info="A unique handle for your profile URL. Your full name, company name, nickname"
-                />
                 <TextFieldGroup
                   placeholder="Profile Image URL"
                   name="avatarURL"
