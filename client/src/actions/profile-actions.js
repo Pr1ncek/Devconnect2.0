@@ -41,6 +41,16 @@ export const addExperience = (expData, history) => dispatch => {
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
 
+// Delete work experience from the profile
+export const deleteExperience = id => {
+  if (window.confirm('Are you sure you want to delete this experience?')) {
+    axios
+      .delete('api/profile/experience/' + id)
+      .then(res => ({ type: GET_PROFILE, payload: {} }))
+      .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+  }
+};
+
 // Add education to the profile
 export const addEducation = (eduData, history) => dispatch => {
   axios
