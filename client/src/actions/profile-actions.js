@@ -1,13 +1,27 @@
 import axios from 'axios';
-import { GET_PROFILE, PROFILE_LOADING, GET_ERRORS } from './types';
+import {
+  GET_PROFILE,
+  PROFILE_LOADING,
+  GET_ERRORS,
+  GET_PROFILES
+} from './types';
+
+// Get all profiles
+export const getProfiles = () => dispatch => {
+  dispatch({ type: PROFILE_LOADING });
+  axios
+    .get('/api/profile/all')
+    .then(res => dispatch({ type: GET_PROFILES, payload: res.data }))
+    .catch(err => dispatch({ type: GET_PROFILES, payload: {} }));
+};
 
 // GET current profile
 export const getCurrentProfile = () => dispatch => {
   dispatch({ type: PROFILE_LOADING });
   axios
-    .get('api/profile')
+    .get('/api/profile')
     .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-    .catch(err => dispatch({ type: GET_PROFILE, payload: {} }));
+    .catch(err => dispatch({ type: GET_PROFILE, payload: [] }));
 };
 
 // Create a new profile or update existing one
