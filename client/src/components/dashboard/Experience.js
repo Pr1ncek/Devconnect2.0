@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
+import { deleteExperience } from '../../actions/profile-actions';
 
 class Experience extends Component {
+  onDeleteClick = expId => this.props.deleteExperience(expId);
+
   render() {
     const { experience } = this.props;
     const content = experience.map(exp => (
@@ -21,7 +23,12 @@ class Experience extends Component {
           )}
         </td>
         <td>
-          <button className="btn btn-danger">Delete</button>{' '}
+          <button
+            className="btn btn-danger"
+            onClick={e => this.onDeleteClick(exp._id)}
+          >
+            Delete
+          </button>{' '}
         </td>
       </tr>
     ));
@@ -51,4 +58,7 @@ Experience.propTypes = {
   experience: PropTypes.array.isRequired
 };
 
-export default connect(null)(withRouter(Experience));
+export default connect(
+  null,
+  { deleteExperience }
+)(Experience);
