@@ -10,6 +10,21 @@ class Navbar extends Component {
     this.props.logoutUser();
   };
 
+  avatarURL = this.props.profile.avatarURL;
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.profile.profile) {
+      if (nextProps.profile.profile.user) {
+        if (nextProps.profile.profile.user._id === nextProps.auth.user.id) {
+          this.avatarURL = nextProps.profile.profile.avatarURL;
+          console.log(this.avatarURL);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
@@ -34,7 +49,7 @@ class Navbar extends Component {
           {this.props.profile.profile &&
           Object.keys(this.props.profile.profile).length > 0 ? (
             <img
-              src={this.props.profile.profile.avatarURL}
+              src={this.avatarURL}
               alt=""
               style={{ width: '40px', height: '40px', borderRadius: '50%' }}
             />

@@ -6,13 +6,22 @@ import {
   GET_PROFILES
 } from './types';
 
-// Get all profiles
+// GET all profiles
 export const getProfiles = () => dispatch => {
   dispatch({ type: PROFILE_LOADING });
   axios
     .get('/api/profile/all')
     .then(res => dispatch({ type: GET_PROFILES, payload: res.data }))
-    .catch(err => dispatch({ type: GET_PROFILES, payload: {} }));
+    .catch(err => dispatch({ type: GET_PROFILES, payload: [] }));
+};
+
+// GET user profile by profile handle
+export const getProfileByHandle = handle => dispatch => {
+  dispatch({ type: PROFILE_LOADING });
+  axios
+    .get('/api/profile/' + handle)
+    .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
+    .catch(err => dispatch({ type: GET_PROFILE, payload: null }));
 };
 
 // GET current profile
@@ -21,7 +30,7 @@ export const getCurrentProfile = () => dispatch => {
   axios
     .get('/api/profile')
     .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-    .catch(err => dispatch({ type: GET_PROFILE, payload: [] }));
+    .catch(err => dispatch({ type: GET_PROFILE, payload: {} }));
 };
 
 // Create a new profile or update existing one
