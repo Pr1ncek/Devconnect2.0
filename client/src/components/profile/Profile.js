@@ -16,6 +16,12 @@ class Profile extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.profile.profile) {
+      this.props.history.push('/');
+    }
+  }
+
   render() {
     const { profile, loading } = this.props.profile;
     let content;
@@ -28,7 +34,7 @@ class Profile extends Component {
           <div className="row">
             <div className="col-md-6">
               <Link to="/profiles" className="btn btn-light mb-3 float-left">
-                Back To Profile
+                Back To Profiles
               </Link>
             </div>
             <div className="col-md-" />
@@ -47,7 +53,7 @@ class Profile extends Component {
       <div className="profile">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">{content}</div>
+            <div className="col-md-12 mb-5">{content}</div>
           </div>
         </div>
       </div>

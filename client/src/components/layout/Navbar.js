@@ -17,7 +17,6 @@ class Navbar extends Component {
       if (nextProps.profile.profile.user) {
         if (nextProps.profile.profile.user._id === nextProps.auth.user.id) {
           this.avatarURL = nextProps.profile.profile.avatarURL;
-          console.log(this.avatarURL);
           return true;
         }
       }
