@@ -1,9 +1,8 @@
-import { GET_ERRORS } from './types';
+import { CLEAR_ERRORS } from './types';
 
 // Clear the errors object
 export const clearErrors = () => {
   return {
-    type: GET_ERRORS,
-    payload: {}
+    type: CLEAR_ERRORS
   };
 };

@@ -16,18 +16,14 @@ class Profile extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.profile.profile) {
-      this.props.history.push('/');
-    }
-  }
-
   render() {
     const { profile, loading } = this.props.profile;
     let content;
 
-    if (!profile || loading) {
+    if (loading) {
       content = <Spinner />;
+    } else if (!profile) {
+      content = <h2 className="text-center">Profile Not Found</h2>;
     } else {
       content = (
         <div>

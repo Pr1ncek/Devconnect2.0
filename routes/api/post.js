@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const Post = require('../../models/Post');
+const Profile = require('../../models/Profile');
 const validatePostInput = require('../../validation/post');
 
 // @route   GET api/post
@@ -39,9 +40,20 @@ router.post(
     const { isValid, errors } = validatePostInput(req.body);
     if (!isValid) return res.status(400).json(errors);
 
-    Post.create({ ...req.body, user: req.user.id }, (err, post) => {
+    Profile.findOne({ user: req.user.id }, (err, profile) => {
       if (err) return res.status(400).json(err);
-      res.status(200).json(post);
+      Post.create(
+        {
+          ...req.body,
+          user: req.user.id,
+          author: req.user.name,
+          avatarURL: profile.avatarURL
+        },
+        (err, post) => {
+          if (err) return res.status(400).json(err);
+          res.status(200).json(post);
+        }
+      );
     });
   }
 );
