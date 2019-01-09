@@ -10,6 +10,7 @@ import {
   getCurrentProfile
 } from '../../actions/profile-actions';
 import { clearErrors } from '../../actions/error-actions';
+import store from '../../store';
 
 class EditProfile extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class EditProfile extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearErrors();
+    store.dispatch(this.props.clearErrors());
   }
 
   componentWillReceiveProps(nextProps) {

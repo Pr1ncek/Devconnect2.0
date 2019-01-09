@@ -5,6 +5,8 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addEducation } from '../../actions/profile-actions';
+import { clearErrors } from '../../actions/error-actions';
+import store from '../../store';
 
 class AddEducation extends Component {
   constructor(props) {
@@ -27,6 +29,9 @@ class AddEducation extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+  }
+  componentWillUnmount() {
+    store.dispatch(this.props.clearErrors());
   }
 
   onChange = e => {
@@ -156,5 +161,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addEducation }
+  { addEducation, clearErrors }
 )(withRouter(AddEducation));

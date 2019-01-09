@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import TextFieldGroup from '../common/TextFieldGroup';
-import { addPost } from '../../actions/post-action';
+import { addComment } from '../../actions/post-action';
 import isEmpty from '../../validation/is-empty';
 
-class PostForm extends Component {
+class CommentForm extends Component {
   state = {
     content: '',
     title: '',
@@ -25,8 +25,12 @@ class PostForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const postData = { title: this.state.title, content: this.state.content };
-    this.props.addPost(postData);
+    const commentData = {
+      title: this.state.title,
+      content: this.state.content
+    };
+    console.log(commentData);
+    this.props.addComment(this.props.postId, commentData);
   };
 
   render() {
@@ -34,7 +38,7 @@ class PostForm extends Component {
       <div className="post-form mb-3">
         <div className="card card-info">
           <div className="card-header bg-info text-white font-weight-bold">
-            Join the dicussion
+            Reply to this post
           </div>
           <div className="card-body">
             <form onSubmit={this.handleSubmit}>
@@ -55,7 +59,7 @@ class PostForm extends Component {
                 />
               </div>
               <button type="submit" className="btn btn-info">
-                Create Post
+                Reply
               </button>
             </form>
           </div>
@@ -65,9 +69,10 @@ class PostForm extends Component {
   }
 }
 
-PostForm.propTypes = {
-  addPost: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+CommentForm.propTypes = {
+  addComment: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  postId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -76,5 +81,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addPost }
-)(PostForm);
+  { addComment }
+)(CommentForm);

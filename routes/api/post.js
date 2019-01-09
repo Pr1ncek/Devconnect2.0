@@ -92,7 +92,9 @@ router.post(
           .status(404)
           .json({ err, post: 'No post found with this id' });
       // check to see if user already liked a post
-      const index = post.likes.indexOf(req.user.id);
+      const index = post.likes.findIndex(like => {
+        return like._id.toString() === req.user.id;
+      });
       index === -1 ? post.likes.push(req.user.id) : post.likes.splice(index, 1);
       post.save(err => {
         if (err)
@@ -114,24 +116,32 @@ router.post(
     const { isValid, errors } = validatePostInput(req.body);
     if (!isValid) return res.status(400).json(errors);
 
-    Post.findById(req.params.post_id, (err, post) => {
-      if (err || !post)
-        return res
-          .status(404)
-          .json({ ...err, post: 'No post found with this id' });
-      post.comments.push({ user: req.user.id, ...req.body });
-      post.save(err => {
-        if (err)
+    Profile.findOne({ user: req.user.id }, (err, profile) => {
+      if (err) return res.status(400).json(err);
+      Post.findById(req.params.post_id, (err, post) => {
+        if (err || !post)
           return res
-            .status(400)
-            .json({ err, post: 'comment could not be saved' });
-        res.status(200).json({ Success: true });
+            .status(404)
+            .json({ ...err, post: 'No post found with this id' });
+        post.comments.push({
+          user: req.user.id,
+          ...req.body,
+          author: req.user.name,
+          avatarURL: profile.avatarURL
+        });
+        post.save(err => {
+          if (err)
+            return res
+              .status(400)
+              .json({ err, post: 'comment could not be saved' });
+          res.status(200).json({ Success: true });
+        });
       });
     });
   }
 );
 
-// @route   DELETE api/post/comment/:post_id
+// @route   DELETE api/post/comment/:post_id/:comment_id
 // @desc    Delete a comment on a post
 // @access  Private
 router.delete(

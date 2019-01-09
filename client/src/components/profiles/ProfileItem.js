@@ -13,7 +13,7 @@ class ProfileItem extends Component {
             <img
               src={profile.avatarURL}
               alt=""
-              style={{ borderRadius: '50%', height: '150px' }}
+              style={{ borderRadius: '50%', height: '170px', width: '170px' }}
             />
           </div>
           <div className="col-lg-6 col-md-4 col-8 mt-4 ml-5">

@@ -8,19 +8,6 @@ class ProfileHeader extends Component {
       <div className="row">
         <div className="col-md-12">
           <div className="card card-body bg-info text-white mb-3">
-            <div className="row">
-              <div className="col-4 col-md-2 m-auto">
-                <img
-                  src={profile.avatarURL}
-                  alt=""
-                  style={{
-                    borderRadius: '50%',
-                    width: '150px',
-                    height: '150px'
-                  }}
-                />
-              </div>
-            </div>
             <div className="text-center">
               <h1 className="display-4 text-center">{profile.user.name}</h1>
               <p className="lead text-center">

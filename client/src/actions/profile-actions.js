@@ -5,6 +5,7 @@ import {
   GET_ERRORS,
   GET_PROFILES
 } from './types';
+import { clearErrors } from './error-actions';
 
 // GET all profiles
 export const getProfiles = () => dispatch => {
@@ -37,7 +38,10 @@ export const getCurrentProfile = () => dispatch => {
 export const createProfile = (profileData, history) => dispatch => {
   axios
     .post('/api/profile', profileData)
-    .then(res => history.push('/dashboard'))
+    .then(res => {
+      dispatch(clearErrors());
+      history.push('/dashboard');
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -60,7 +64,10 @@ export const deleteProfile = () => dispatch => {
 export const addExperience = (expData, history) => dispatch => {
   axios
     .post('/api/profile/experience', expData)
-    .then(response => history.push('/dashboard'))
+    .then(response => {
+      dispatch(clearErrors());
+      history.push('/dashboard');
+    })
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
 
@@ -77,7 +84,10 @@ export const deleteExperience = expId => dispatch => {
 export const addEducation = (eduData, history) => dispatch => {
   axios
     .post('api/profile/education', eduData)
-    .then(response => history.push('/dashboard'))
+    .then(response => {
+      dispatch(clearErrors());
+      history.push('/dashboard');
+    })
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
 

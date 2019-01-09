@@ -12,8 +12,18 @@ import Experience from './Experience';
 import Education from './Education';
 
 class Dashboard extends Component {
+  state = {
+    currentProfile: this.props.profile
+  };
+
   componentDidMount() {
     this.props.getCurrentProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.profile) {
+      this.setState({ currentProfile: nextProps.profile });
+    }
   }
 
   onDeleteClick = () => {
